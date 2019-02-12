@@ -45,16 +45,17 @@ void printBoard(int board[SIZE][SIZE]) {
 // row_check[row] will be set to true; otherwise, it will be false.
 void* checkRow(void* args) {
     //check if the rowindex has duplicates
-    int row_index = *((int *)args);
-    int rows[9] = {-1, -1, -1, -1, -1, -1, -1, -1, -1};
+    int rowIndex = *((int *)args);
+    int digits[SIZE+1] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
     for (int i = 0; i < SIZE; ++i) {
-        if (rows[board[row_index][i] - 1] == 0){
-            row_check[row_index] = false;
+        int digit = board[rowIndex][i];
+        if (digits[digit] == 0){
+            row_check[rowIndex] = false;
             return NULL;
         }
-        rows[board[row_index][i] - 1] = 0;
+        digits[digit] = 0;
     }
-    row_check[row_index] = true;
+    row_check[rowIndex] = true;
     return NULL;
 }
 
@@ -62,17 +63,17 @@ void* checkRow(void* args) {
 // value for that col appropriately. If no number is repeated in that col,
 // col_check[col] will be set to true; otherwise, it will be false.
 void* checkCol(void* args) {
-
-    int col_index = *((int *)args);
-    int cols[9] = {-1, -1, -1, -1, -1, -1, -1, -1, -1};
-    for(int i = 0; i < SIZE; i++){
-        if (cols[board[i][col_index] - 1] == 0) {
-            col_check[col_index] = false;
+    int colIndex = *((int *)args);
+    int digits[SIZE+1] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    for(int i = 0; i < SIZE; i++) {
+        int digit = board[i][colIndex];
+        if (digits[digit] == 0) {
+            col_check[colIndex] = false;
             return NULL;
         }
-        cols[board[i][col_index] - 1] = 0;
+        digits[digit] = 0;
     }
-    col_check[col_index] = true;
+    col_check[colIndex] = true;
     return NULL;
 }
 
