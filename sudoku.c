@@ -53,7 +53,9 @@ void* checkRow(void* args) {
             row_check[rowIndex] = false;
             return NULL;
         }
-        digits[digit] = 0;
+        if (digit != 0) {
+            digits[digit] = 0;
+        }
     }
     row_check[rowIndex] = true;
     return NULL;
@@ -71,7 +73,9 @@ void* checkCol(void* args) {
             col_check[colIndex] = false;
             return NULL;
         }
-        digits[digit] = 0;
+        if (digit != 0) {
+            digits[digit] = 0;
+        }
     }
     col_check[colIndex] = true;
     return NULL;
