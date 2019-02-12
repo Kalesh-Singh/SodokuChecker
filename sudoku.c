@@ -84,23 +84,42 @@ void* checkCol(void* args) {
 // Checks the given 3x3 box for duplicate numbers, and updates the box_check
 // value for that box appropriately. If no number is repeated in that box,
 // box_check[box] will be set to true; otherwise, it will be false.
+/*
+ *   Columns  0  1  2   3  4  5  6  7  8
+ *           |--------|--------|--------|
+ *  Rows 0   |  Box 0 |  Box 1 |  Box 2 |
+ *       1   | %3 = 0 | %3 = 1 | %3 = 2 |
+ *       2   | /3 = 0 | /3 = 0 | /3 = 0 |
+ *           |--------|--------|--------|
+ *       3   |  Box 3 |  Box 4 |  Box 5 |
+ *       4   | %3 = 0 | %3 = 1 | %3 = 2 |
+ *       5   | /3 = 1 | /3 = 1 | /3 = 1 |
+ *           |--------|--------|--------|
+ *       6   |  Box 6 |  Box 7 |  Box 8 |
+ *       7   | %3 = 0 | %3 = 1 | %3 = 2 |
+ *       8   | /3 = 2 | /3 = 2 | /3 = 2 |
+ *           |--------|--------|--------|
+ *
+ */
 void* checkBox(void* args) {
     int boxNum = *((int *)args);
-    int cols[10] = {false, false, false, false, false, false, false, false, false};
-    int col_start = ((boxNum) % 3) * 3;
-    int row_start = ((int)((boxNum) / 3)) * 3;
+    int digits[SIZE+1] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    int colStart = ((boxNum) % 3) * 3;
+    int rowStart = ((int)((boxNum) / 3)) * 3;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++){
-            cols[board[row_start + i][col_start + j] - 1] = true;
-        }
-    }
-    for (int i = 0; i < 10; i++){
-        if (cols[i] == false) {
-            box_check[boxNum] = false;
-            return NULL;
+            int digit = board[rowStart+i][colStart+j];
+            if (digits[digit] == 0) {
+                box_check[boxNum] = false;
+                return NULL;
+            }
+            if (digit != 0) {
+                digits[digit] = 0;
+            }
         }
     }
     box_check[boxNum] = true;
+    return NULL;
 }
 
 // Spawn a thread to fill each cell in each result matrix.
