@@ -110,18 +110,24 @@ int main() {
 
     // 3. Create a thread for each cell of each matrix operation.
     // Threads that will check the rows
+    int rowArgs[SIZE];
     for (int i = 0; i < SIZE; i++) {
-        pthread_create(&(threads[ROWS][i]), NULL, checkRow, (void*) &i);
+        rowArgs[i] = i;
+        pthread_create(&(threads[ROWS][i]), NULL, checkRow, (void*) &rowArgs[i]);
     }
 
     // Threads that will check the cols
+    int colArgs[SIZE];
     for (int i = 0; i < SIZE; i++) {
-        pthread_create(&(threads[COLS][i]), NULL, checkCol, (void*) &i);
+        colArgs[i] = i;
+        pthread_create(&(threads[COLS][i]), NULL, checkCol, (void*) &colArgs[i]);
     }
 
     // Threads that will check the boxes
+    int boxArgs[SIZE];
     for (int i = 0; i < SIZE; i++) {
-        pthread_create(&(threads[BOXES][i]), NULL, checkBox, (void*) &i);
+        boxArgs[i] = i;
+        pthread_create(&(threads[BOXES][i]), NULL, checkBox, (void*) &boxArgs[i]);
     }
 
     // 4. Wait for all threads to finish.
