@@ -19,5 +19,5 @@ The checker is implemented to use 27 threads:
 
 The main thread joins each of these threads and waits for them to perform the appropriate check procedure (`row_check, col_check, box_check`).
 
-## Compliling the Checker ##
+## Compling the Checker ##
 The checker can be complied by running the `make` command.
